@@ -99,20 +99,17 @@ def GetCompilationDatabaseFolder(filename):
     The compilation_commands.json for the given file is returned by getting
     the package the file belongs to.
     """
-    try:
-        import rospkg
-    except ImportError:
-        return ''
-    pkg_name = rospkg.get_package_name(filename)
-    if not pkg_name:
-        return ''
-    dir = (os.path.expandvars('$ROS_WORKSPACE') +
-           os.path.sep +
-           'build' +
-           os.path.sep +
-           pkg_name)
 
-    return dir
+    ros_workspace = os.path.expandvars('$ROS_WORKSPACE')
+
+    if ros_workspace:
+        dir = (ros_workspace +
+                os.path.sep +
+                'build' +
+                os.path.sep)
+        return dir
+    else:
+        return ''
 
 
 def GetDatabase(compilation_database_folder):
